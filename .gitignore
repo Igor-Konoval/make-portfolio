@@ -1,0 +1,5 @@
+/.vs
+/oldBuild
+/node_modules
+/config.js
+/mongo.js

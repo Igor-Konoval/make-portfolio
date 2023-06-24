@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./head') %>
+<style>
+    .header-up-text {
+        display: none;
+    }
+
+    .container-form-reg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1000px;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .container_reg {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        width: 382px;
+        padding: 20px;
+    }
+
+    .registr_form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    label {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    input[type="input"], input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 31px;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+    }
+
+    input[type='submit'] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #3b3e42;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    input[type='submit']:hover {
+        background-color: #1b1e22;
+    }
+
+    .button__login_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .button__login {
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 2px solid #ffffff;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .button__login:hover {
+        background-color: #3b3e42;
+        color: #fff;
+        border-color: #fff;
+    }
+
+    .error_name_Empty {
+        color: red;
+        display: none;
+    }
+
+    .error_name_Validation {
+        color: red;
+        display: none;
+    }
+
+    .error_password {
+        color: red;
+        display: none;
+    }
+
+    @media (max-width: 951px) {
+
+        .error_name_Validation p {
+            margin: 0;
+        }
+
+        .container-form-reg {
+           top: 48%;
+        }
+
+        .error_name_Empty p {
+            margin: 0 0 10px 0;
+        }
+
+        .itemNav {
+            padding: 5px;
+        }
+
+        .error_password p {
+            margin: 0;
+        }
+
+        .container_reg {
+            padding: 42px 20px 0 20px;
+        }
+        
+        input[type="input"], input[type="password"] {
+            margin-bottom: 5px;
+        }
+
+        .registr_form {
+            margin-bottom: -24px;
+        }
+        
+    }
+
+    @media (max-width: 478px) {
+        .container_reg {
+           width: 214px; 
+        }
+
+        .itemNav {
+            padding: 5px;
+            margin: auto;
+        }
+
+        .container-form-reg {
+            top: 48%;
+        }
+
+        .headerbg {
+            height: 664px;
+        }
+        
+    }
+
+    .message {
+        color: red;
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <div class="loader"></div>
+    <%- include('./header') %>
+    <div class="container-form-reg">    
+        <div class="container_reg">
+            <form action="/auth/registration" method="post" class="registr_form">
+                <label>Name</label><br>
+                <input type="input" name="username" id="regOne"> <br>
+                <div class="error_name_Empty">
+                    <p>пустое поле имени</p>
+                </div>
+                <div class="error_name_Validation">
+                    <p>Имя пользователя содержит недопустимые символы | / \\ { } [ ] _ пробел</p>
+                </div>
+                <label>Password</label><br>
+                <input type="password" name="password" id="regTwo"> <br>
+                <div class="error_password">
+                    <p>ошибка длинны пароля, допустимо от 4 до 26</p>
+                </div>
+                <% if (message) { %>
+                    <div class="message">
+                      <%= message %>
+                    </div>
+                <% } %>
+                <input type="submit" value="send data" id="submit_send_data_registration"> <br><br>
+            </form>
+        </div>
+        <script>
+            const formRegistation = document.querySelector('.registr_form');
+            
+           let regOne = document.getElementById('regOne');
+
+            let regTwo = document.getElementById('regTwo');
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('submit_send_data_registration').onclick = (event) => {
+                    event.preventDefault();
+                    let check = 1;
+                    let regOne = document.getElementById('regOne');
+                    let regTwo = document.getElementById('regTwo');
+                    
+                    if (!regOne.value.length) {
+                        document.querySelector('.error_name_Empty').style.display = 'block';
+                        check--;
+                    } else {
+                        document.querySelector('.error_name_Empty').style.display = 'none';
+                        check++;
+                    }
+
+                    if (regOne.value.match(/[|/\\{}[\]_\s]/)) {
+                        document.querySelector('.error_name_Validation').style.display = 'block';
+                        check--;
+                    } else {
+                        document.querySelector('.error_name_Validation').style.display = 'none';
+                        check++;
+                    }
+
+                    if (regTwo.value.length <= 3 || regTwo.value.length >= 26) {
+                        document.querySelector('.error_password').style.display = 'block';
+                        check--;
+                    } else {
+                        document.querySelector('.error_password').style.display = 'none';
+                        check++;
+                    }
+                    if (check === 4) formRegistation.submit();
+                }
+            });
+        </script>
+        <div class="button__login_container">
+            <a href="/form_login" class="button__login">have account?</a>
+        </div>
+    </div>
+    <%- include('./footer') %>
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader");
+        
+            loader.classList.add("loader--hidden");
+        });
+    </script>
+</body>
+</html>

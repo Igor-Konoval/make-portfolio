@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./head') %>
+<style>
+    .header-up-text {
+        display: none;
+    }
+
+    .container-form-reg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .container_log {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        width: 382px;
+        padding: 20px;
+    }
+
+    .login_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    }
+
+    .input[type="input"] {
+        /* padding-left: 35px; */
+        text-align: center;
+    }
+
+    input[type="input"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        font-size: 16px;
+        text-align: center;
+    }
+
+    input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    }
+
+    #login_submit {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #3b3e42;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    }
+
+    #login_submit:hover {
+    background-color: #1b1e22;
+    }
+
+    .button__registr_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    }
+
+    .button__registr {
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 2px solid #ffffff;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .button__registr:hover {
+    background-color: #3b3e42;
+    color: #fff;
+    border-color: #fff;
+    }
+
+    @media (max-width: 951px) {
+        .container-form-reg {
+            top: 48%;
+        }
+    }
+
+    @media (max-width: 479px) {
+        .container_log {
+            width: 214px;
+            padding: 42px 20px 0 20px;
+        }
+
+        .container-form-reg {
+            top: 48%;
+        }
+
+        .headerbg {
+            height: 664px;
+        }
+    }
+
+    .message {
+    color: red;
+    margin-bottom: 10px;
+}
+</style>
+<body>
+    <div class="loader"></div>
+    <%- include('./header') %>
+    <div class="container-form-reg">    
+        <div class="container_log">
+            <form action="/auth/login" method="post" class="login_form">
+                <label>Name</label><br>
+                <input type="input" name="username" id="regOne"> <br>
+                <label>Password</label><br>
+                <input type="password" name="password" id="regTwo"> <br>
+                <% if (message) { %>
+                    <div class="message">
+                        <%= message %>
+                    </div>
+                <% } %>
+                <input type="submit" id="login_submit" value="send data"> <br>
+            </form>
+        </div>
+        <div class="button__registr_container">
+            <a href="/form_registration" class="button__registr">registration</a>
+        </div>
+    </div>
+    <script src="/scriptModules/loginScript.js"></script>
+    <%- include('./footer') %>
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.querySelector(".loader");
+        
+            loader.classList.add("loader--hidden");
+        });
+    </script>
+</body>
+</html>
